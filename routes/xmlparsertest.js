@@ -24,10 +24,13 @@ function retrieveFeedSource() {
 }
 
 /* GET home page. */
-router.get('/parse', function(req, res, next) {
+router.get('/', function(req, res, next) {
     retrieveFeedSource();
+    console.log("inside parse method");
     res.render('hello', {});
 });
+
+
 
 module.exports = router;
 

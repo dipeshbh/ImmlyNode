@@ -11,7 +11,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var xmlParserTest = require('./routes/xmlparsertest');
 
-console.log("xmlparsertest initialize" + xmlParserTest);
+//console.log("xmlparsertest initialize" + xmlParserTest);
 
 
 var app = express();
