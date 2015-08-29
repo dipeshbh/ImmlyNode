@@ -43,19 +43,22 @@ html(lang='en')
               small
                 p Immigrants build nations
         // /.row
-        // Project One
-        .row
-          .col-md-2
-            a(href='#')
-              img.img-responsive.vcenter(src='/assets/uscislogo.png', alt='')
-          .col-md-5
-            h3 USCIS
-            h4 USCIS Discontinues Legacy e-Filing System
-            p
-              | USCIS will discontinue its legacy e-Filing system in order to maintain data security standards and focus resources on the replacement Electronic Immigration System.
-            a.btn.btn-primary(href='#')
-              | View Full Article 
-              span.glyphicon.glyphicon-chevron-right
+
+        each result in returnResults
+          .row
+            .col-md-2
+              a(href='#')
+                img.img-responsive.vcenter(src='#{result.fileURL}', alt='')
+            .col-md-5
+              h3 !{result.sourceName}
+              h4 !{result.title}
+              p
+                | !{result.content}
+              a.btn.btn-primary(href='#')
+                | View Full Article 
+                span.glyphicon.glyphicon-chevron-right
+        
+
         hr
         // Pagination
         .row.text-center
