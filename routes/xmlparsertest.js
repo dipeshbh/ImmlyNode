@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var feed = require('feed-read-master');
-
+var gfeed = require('google-feed-api');
 
 
 function retrieveFeedSource(res) {
@@ -22,25 +21,31 @@ function retrieveFeedSource(res) {
                   var fileURL = results[i].get("sourceLogo").url();
                   var feedURL = results[i].get("sourceURL");
 
+                    var feed = new gfeed.Feed(feedURL);
+
                   //start XML parsing
-                  feed(feedURL, function(err, articles) {
+                    feed.listItems(function(articles) {
 
-                    // loop through the list of articles returned
-                    for (var x = 0; x < articles.length; x++) {
+                          // loop through the list of articles returned
+                          for (var x = 0; x < articles.length; x++) {
 
-                        returnResults[x] = {};
-                        returnResults[x]["sourceName"] = sourceName
-                        returnResults[x]["fileURL"] = fileURL
-                        returnResults[x]["title"] = articles[x].title;
-                        returnResults[x]["link"] = articles[x].link;
-                        returnResults[x]["content"] = articles[x].content;
-                        returnResults[x]["published"] = articles[x].published;
+                              var entry = articles[x];
 
-                        // check we have reached the end of our list of articles & urls
-                        if( x === articles.length-1 && i === results.length-1) {
-                            res.render('hello', {returnResults : returnResults}); // end http response
-                        } // else still have rss urls to check
-                    } //  end 
+                              returnResults[x] = {};
+                              returnResults[x]["sourceName"] = sourceName;
+                              returnResults[x]["fileURL"] = fileURL;
+                              returnResults[x]["title"] = entry.title;
+                              returnResults[x]["link"] = entry.link;
+                              returnResults[x]["summary"] = entry.contentSnippet;
+                              returnResults[x]["date"] = entry.publishedDate;
+
+                              // check we have reached the end of our list of articles & urls
+                              if (x === articles.length - 1 && i === results.length - 1) {
+                                  //res.render('hello', {returnResults : returnResults}); // end http response
+                                  res.render('hello', {returnResults: returnResults});
+                              } // else still have rss urls to check
+                          }
+
                   });
                 }
                 
@@ -48,9 +53,8 @@ function retrieveFeedSource(res) {
             error: function(error) {
               console.log("Error: " + error.code + " " + error.message);
             }
-        });   
 
-
+        });
 }
 
 /* GET home page. */
