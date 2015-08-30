@@ -9,9 +9,9 @@ function retrieveFeedSource(res) {
         //console.log("FeedSource");
         var query = new Parse.Query(FeedSource);
         var returnResults = [{}];
+        var count = 0;
 
-        query.find({
-            success: function(results) {
+        query.find().then(function(results){ 
                 
                 
                 for(var i = 0; i < results.length; i++) {
@@ -26,35 +26,38 @@ function retrieveFeedSource(res) {
                   //start XML parsing
                     feed.listItems(function(articles) {
 
+                      console.log("returning results" + articles.length);
+
                           // loop through the list of articles returned
                           for (var x = 0; x < articles.length; x++) {
 
                               var entry = articles[x];
 
-                              returnResults[x] = {};
-                              returnResults[x]["sourceName"] = sourceName;
-                              returnResults[x]["fileURL"] = fileURL;
-                              returnResults[x]["title"] = entry.title;
-                              returnResults[x]["link"] = entry.link;
-                              returnResults[x]["summary"] = entry.contentSnippet;
-                              returnResults[x]["date"] = entry.publishedDate;
+                              returnResults[count] = {};
+                              returnResults[count]["sourceName"] = sourceName;
+                              returnResults[count]["fileURL"] = fileURL;
+                              returnResults[count]["title"] = entry.title;
+                              returnResults[count]["link"] = entry.link;
+                              returnResults[count]["summary"] = entry.contentSnippet;
+                              returnResults[count]["date"] = entry.publishedDate;
+                              count++;
 
                               // check we have reached the end of our list of articles & urls
-                              if (x === articles.length - 1 && i === results.length - 1) {
-                                  //res.render('hello', {returnResults : returnResults}); // end http response
+                              if (x === articles.length - 1 && i === results.length) {
+                                  console.log("returning results" + count);
                                   res.render('hello', {returnResults: returnResults});
-                              } // else still have rss urls to check
+                              } // else still have rss urls to check*/
                           }
 
                   });
                 }
                 
-            },
-            error: function(error) {
+            }, function(error) {
               console.log("Error: " + error.code + " " + error.message);
-            }
+            });
 
-        });
+
+    
 }
 
 /* GET home page. */

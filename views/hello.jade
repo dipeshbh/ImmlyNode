@@ -53,8 +53,8 @@ html(lang='en')
               h3 !{result.sourceName}
               h4 !{result.title}
               p
-                | !{result.content}
-              a.btn.btn-primary(href='#')
+                | !{result.summary}
+              a.btn.btn-primary(href='#{result.link}')
                 | View Full Article 
                 span.glyphicon.glyphicon-chevron-right
         
