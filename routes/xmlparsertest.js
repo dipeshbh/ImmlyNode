@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+<<<<<<< HEAD
 //var gfeed = require('google-feed-api');
 var gfeed = require('feed-read-master');
 var async = require('async-master');
@@ -53,8 +54,34 @@ function retrieveFeedSource(res) {
                 }
 
                 callback();
+=======
+var gfeed = require('google-feed-api');
+var async = require('async');
+
+
+function retrieveFeedSource(res) {
+        //console.log("inside retrieveFeedSource function")
+        var FeedSource = Parse.Object.extend("FeedSource");
+        //console.log("FeedSource");
+        var query = new Parse.Query(FeedSource);
+        var queryResults = [];
+        var returnResults = [{}];
+        var finalDict = [];
+        var count = 0;
+
+
+        query.find().then(function(results){
+            queryResults = results;
+
+            async.each(results,function(result){
+
+>>>>>>> origin/master
 
             });
+
+        }, function(error) {
+            console.log("Error: " + error.code + " " + error.message);
+        });
 
 
 
