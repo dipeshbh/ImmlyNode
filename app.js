@@ -10,6 +10,7 @@ Parse.initialize("vysdh19Gum7JGv4dv965WUKrrBCDicYrtGfb91dD", "2BHDnHGIdieNtYbcwF
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var xmlParserTest = require('./routes/xmlparsertest');
+var track = require('./routes/track');
 
 //console.log("xmlparsertest initialize" + xmlParserTest);
 
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/parse', xmlParserTest);
+app.use('/track', track);
 
 
 // catch 404 and forward to error handler
